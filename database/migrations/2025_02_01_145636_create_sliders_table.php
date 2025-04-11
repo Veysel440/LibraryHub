@@ -6,23 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
     public function up(): void
     {
         Schema::create('sliders', function (Blueprint $table) {
             $table->id();
             $table->string('main_title');
             $table->string('sub_title');
-            $table->string('image');
+            $table->string('image')->nullable()->change();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('sliders');

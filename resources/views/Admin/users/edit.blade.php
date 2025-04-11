@@ -26,7 +26,7 @@
         <main>
             <div class="container-fluid px-4 mt-4">
                 <h1 class="mb-4">Kullanıcıyı Düzenle</h1>
-                <form action="{{ route('users.update', $user->id) }}" method="POST">
+                <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="mb-3">

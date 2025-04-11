@@ -2,36 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContactRequest;
 use App\Models\Communication;
+use App\Services\Contracts\ContactServiceInterface;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+    protected $contactService;
+
+    public function __construct(ContactServiceInterface $communicationService)
+    {
+        $this->contactService = $communicationService;
+    }
+
     public function index()
     {
         return view('contact.index');
     }
 
-    public function store(Request $request)
+    public function store(ContactRequest $request)
     {
-        // Validate the incoming data
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone_number' => 'nullable|string|max:255',
-            'subject' => 'required|string|max:255',
-            'message' => 'required|string',
-        ]);
-
-        Communication::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone_number' => $request->phone_number,
-            'subject' => $request->subject,
-            'message' => $request->message,
-        ]);
-
-        // Redirect back with a success message
+       $this->contactService->store($request->validated());
         return redirect()->back()->with('success', 'Your message has been sent successfully.');
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
@@ -22,18 +23,16 @@ class RegisterController extends Controller
             'password' => 'required|string|confirmed|min:8',
         ]);
 
-        // Yeni kullanıcı oluştur
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'is_admin' => 0,  // Varsayılan olarak admin değil
+            'is_admin' => 0,
         ]);
 
-        // Kullanıcıyı otomatik olarak giriş yap
         Auth::login($user);
 
-        // Kullanıcıyı ana sayfaya yönlendir
         return redirect()->route('home');
     }
 }

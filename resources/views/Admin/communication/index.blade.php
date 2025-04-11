@@ -46,7 +46,7 @@
         <main>
             <div class="container-fluid px-4 mt-4">
                 <h1 class="mb-4">İletişim Kayıtları</h1>
-                <a href="{{ route('communication.create') }}" class="btn btn-primary mb-3">Yeni Kayıt Ekle</a>
+                <a href="{{ route('admin.communication.create') }}" class="btn btn-primary mb-3">Yeni Kayıt Ekle</a>
                 <table class="table table-bordered">
                     <thead>
                     <tr>
@@ -55,10 +55,6 @@
                         <th>Telefon</th>
                         <th>Konu</th>
                         <th>Mesaj</th>
-                        <th>Facebook</th>
-                        <th>Instagram</th>
-                        <th>Twitter</th>
-                        <th>LinkedIn</th>
                         <th>İşlemler</th>
                     </tr>
                     </thead>
@@ -70,13 +66,9 @@
                             <td>{{ $communication->phone_number }}</td>
                             <td>{{ $communication->subject }}</td>
                             <td>{{ $communication->message }}</td>
-                            <td>{{ $communication->facebook }}</td>
-                            <td>{{ $communication->instagram }}</td>
-                            <td>{{ $communication->twitter }}</td>
-                            <td>{{ $communication->linkedin }}</td>
                             <td>
-                                <a href="{{ route('communication.edit', $communication->id) }}" class="btn btn-warning btn-sm">Düzenle</a>
-                                <form action="{{ route('communication.destroy', $communication->id) }}" method="POST" class="d-inline">
+                                <a href="{{ route('admin.communication.edit', $communication->id) }}" class="btn btn-warning btn-sm">Düzenle</a>
+                                <form action="{{ route('admin.communication.destroy', $communication->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm">Sil</button>

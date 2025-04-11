@@ -26,7 +26,7 @@
         <main>
             <div class="container-fluid px-4 mt-4">
                 <h1 class="mb-4">Yeni İletişim Kaydı Ekle</h1>
-                <form action="{{ route('communication.store') }}" method="POST">
+                <form action="{{ route('admin.communication.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label">Ad</label>
@@ -47,22 +47,6 @@
                     <div class="mb-3">
                         <label for="message" class="form-label">Mesaj</label>
                         <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="facebook" class="form-label">Facebook</label>
-                        <input type="text" class="form-control" id="facebook" name="facebook" placeholder="Facebook hesabı bağlantısı">
-                    </div>
-                    <div class="mb-3">
-                        <label for="instagram" class="form-label">Instagram</label>
-                        <input type="text" class="form-control" id="instagram" name="instagram" placeholder="Instagram hesabı bağlantısı">
-                    </div>
-                    <div class="mb-3">
-                        <label for="twitter" class="form-label">Twitter</label>
-                        <input type="text" class="form-control" id="twitter" name="twitter" placeholder="Twitter hesabı bağlantısı">
-                    </div>
-                    <div class="mb-3">
-                        <label for="linkedin" class="form-label">LinkedIn</label>
-                        <input type="text" class="form-control" id="linkedin" name="linkedin" placeholder="LinkedIn hesabı bağlantısı">
                     </div>
 
                     <button type="submit" class="btn btn-primary">Kaydı Ekle</button>

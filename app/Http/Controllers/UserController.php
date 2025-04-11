@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use App\Models\User;
 
 class UserController extends Controller
 {
+    protected $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     public function index()
     {
         $users = User::all();
@@ -20,21 +28,9 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
-            'is_admin' => 'required|in:0',
-        ]);
+        $this->userService->store($request->validated());
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'is_admin' => 0,
-        ]);
-
-        return redirect()->route('users.index')->with('success', 'Kullanıcı başarıyla oluşturuldu!');
+        return redirect()->route('admin.users.index')->with('success', 'Kullanıcı başarıyla oluşturuldu!');
     }
 
     public function edit(string $id)
@@ -45,32 +41,15 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $id,
-            'is_admin' => 'required|in:0',
-            'password' => 'nullable|string|min:8',
-        ]);
+        $this->userService->update($request->validated(), $id);
 
-        $user = User::findOrFail($id);
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->is_admin = 0;
-
-        if ($request->filled('password')) {
-            $user->password = bcrypt($request->input('password'));
-        }
-
-        $user->save();
-
-        return redirect()->route('users.index')->with('success', 'Kullanıcı başarıyla güncellendi.');
+        return redirect()->route('admin.users.index')->with('success', 'Kullanıcı başarıyla güncellendi.');
     }
 
     public function destroy(string $id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
+        $this->userService->destroy($id);
 
-        return redirect()->route('users.index')->with('success', 'Kullanıcı başarıyla silindi!');
+        return redirect()->route('admin.users.index')->with('success', 'Kullanıcı başarıyla silindi!');
     }
 }

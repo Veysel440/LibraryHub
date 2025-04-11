@@ -2,42 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Services\Contracts\SliderServiceInterface;
+use App\Services\SliderService;
+use App\Http\Requests\SliderStoreRequest;
+use App\Http\Requests\SliderUpdateRequest;
 use App\Models\Slider;
 
 class SliderController extends Controller
 {
+    protected $sliderService;
+
+    public function __construct(SliderServiceInterface  $sliderService)
+    {
+        $this->sliderService = $sliderService;
+    }
     public function index()
     {
-        $sliders = Slider::all();
+        $sliders = $this->sliderService->getAll();
         return view('admin.slider.index', compact('sliders'));
     }
 
     public function create()
     {
-
         return view('admin.slider.create');
     }
 
-    public function store(Request $request)
+    public function store(SliderStoreRequest $request)
     {
-
-        $request->validate([
-            'main_title' => 'required|string|max:255',
-            'sub_title' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-
-        $imagePath = $request->file('image')->store('slider_images', 'public');
-
-
-        Slider::create([
-            'main_title' => $request->main_title,
-            'sub_title' => $request->sub_title,
-            'image' => $imagePath,
-        ]);
-
+        $this->sliderService->store($request->validated());
         return redirect()->route('admin.slider.index')->with('success', 'Slider başarıyla eklendi!');
     }
 
@@ -47,26 +39,10 @@ class SliderController extends Controller
         return view('admin.slider.edit', compact('slider'));
     }
 
-    public function update(Request $request, $id)
+    public function update(SliderUpdateRequest $request, $id)
     {
         $slider = Slider::findOrFail($id);
-
-        $request->validate([
-            'main_title' => 'required|string|max:255',
-            'sub_title' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
-
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('slider_images', 'public');
-            $slider->image = $imagePath;
-        }
-
-        $slider->update([
-            'main_title' => $request->main_title,
-            'sub_title' => $request->sub_title,
-        ]);
+        $this->sliderService->update($slider, $request->validated());
 
         return redirect()->route('admin.slider.index')->with('success', 'Slider başarıyla güncellendi!');
     }
@@ -74,7 +50,7 @@ class SliderController extends Controller
     public function destroy($id)
     {
         $slider = Slider::findOrFail($id);
-        $slider->delete();
+        $this->sliderService->delete($slider);
         return redirect()->route('admin.slider.index')->with('success', 'Slider başarıyla silindi!');
     }
 }

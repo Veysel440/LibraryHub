@@ -26,7 +26,7 @@
         <main>
             <div class="container-fluid px-4 mt-4">
                 <h1 class="mb-4">Kullanıcı Ekle</h1>
-                <form action="{{ route('users.store') }}" method="POST">
+                <form action="{{ route('admin.users.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label">Ad</label>

@@ -42,7 +42,7 @@
         <main>
             <div class="container-fluid px-4 mt-4">
                 <h1 class="mb-4">Kullanıcı Yönetimi</h1>
-                <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">Yeni Kullanıcı Ekle</a>
+                <a href="{{ route('admin.users.create') }}" class="btn btn-primary mb-3">Yeni Kullanıcı Ekle</a>
                 <table class="table table-bordered">
                     <thead>
                     <tr>
@@ -61,8 +61,8 @@
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->user_type }}</td>
                             <td>
-                                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">Düzenle</a>
-                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline">
+                                <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-warning btn-sm">Düzenle</a>
+                                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm">Sil</button>

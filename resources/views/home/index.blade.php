@@ -99,7 +99,6 @@
             <span class="visually-hidden"></span>
         </a>
 
-        <!-- İndikatörler -->
         <div class="carousel-indicators">
             @foreach($sliders as $key => $slider)
                 <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="{{ $key }}"

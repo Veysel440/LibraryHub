@@ -26,7 +26,7 @@
     </div>
     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
         <nav class="sb-sidenav-menu-nested nav">
-            <a class="nav-link" href="{{ route('communication.index') }}">İletişim</a>
+            <a class="nav-link" href="{{ route('admin.communication.index') }}">İletişim</a>
         </nav>
     </div>
     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -36,7 +36,7 @@
     </a>
     <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
         <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-            <a class="nav-link" href="{{ route('users.index') }}">Kullanıcılar</a>
+            <a class="nav-link" href="{{ route('admin.users.index') }}">Kullanıcılar</a>
         </nav>
     </div>
     <div class="sb-sidenav-menu-heading">Eklentiler</div>
